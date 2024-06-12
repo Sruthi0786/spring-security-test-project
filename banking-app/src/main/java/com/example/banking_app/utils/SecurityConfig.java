@@ -1,5 +1,5 @@
 package com.example.banking_app.utils;
-
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +32,8 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
-                .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/api/test/public").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement((sessionManagement) -> sessionManagement
@@ -53,7 +54,7 @@ public class SecurityConfig {
                 .passwordEncoder(passwordEncoder());
         return authenticationManagerBuilder.build();
     }
-
+ 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
